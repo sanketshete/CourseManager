@@ -5,7 +5,7 @@ package com.example.sanket.hw6;
  */
 
 public class courseInformation {
-    String Title,InstructorName,day,time,credithr,semister;
+    String Title,InstructorName,day,time, credit, semester;
 
     public String getTitle() {
         return Title;
@@ -39,19 +39,19 @@ public class courseInformation {
         this.time = time;
     }
 
-    public String getCredithr() {
-        return credithr;
+    public String getCredit() {
+        return credit;
     }
 
-    public void setCredithr(String credithr) {
-        this.credithr = credithr;
+    public void setCredit(String credit) {
+        this.credit = credit;
     }
 
-    public String getSemister() {
-        return semister;
+    public String getSemester() {
+        return semester;
     }
 
-    public void setSemister(String semister) {
-        this.semister = semister;
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
 }
