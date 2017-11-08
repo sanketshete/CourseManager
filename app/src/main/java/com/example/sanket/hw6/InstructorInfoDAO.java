@@ -79,11 +79,12 @@ public class InstructorInfoDAO {
         InstructorInfo instructorInfo=null;
         if(c!=null){
             instructorInfo=new InstructorInfo();
-            instructorInfo.setInstructor_fname(c.getString(0));
-            instructorInfo.setInstructor_lname(c.getString(1));
-            instructorInfo.setInstructor_email(c.getString(2));
-            instructorInfo.setInstructor_website(c.getString(3));
-            instructorInfo.setImage(getImage(c.getBlob(4)));
+            instructorInfo.setInstr_ID(c.getInt(0));
+            instructorInfo.setInstructor_fname(c.getString(1));
+            instructorInfo.setInstructor_lname(c.getString(2));
+            instructorInfo.setInstructor_email(c.getString(3));
+            instructorInfo.setInstructor_website(c.getString(4));
+            instructorInfo.setImage(getImage(c.getBlob(5)));
         }
         return instructorInfo;
     }

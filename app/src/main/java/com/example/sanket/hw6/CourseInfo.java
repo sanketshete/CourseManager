@@ -5,21 +5,29 @@ package com.example.sanket.hw6;
  */
 
 public class CourseInfo {
-    String title,Instructor_id,day,time,ampm,credithr,semister;
-
+    String title,day,time,ampm,credithr,semister;
+    int Instructor_id,course_Id;
     public String getTitle() {
         return title;
+    }
+
+    public int getCourse_Id() {
+        return course_Id;
+    }
+
+    public void setCourse_Id(int course_Id) {
+        this.course_Id = course_Id;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getInstructor_id() {
+    public int getInstructor_id() {
         return Instructor_id;
     }
 
-    public void setInstructor_id(String instructor_id) {
+    public void setInstructor_id(int instructor_id) {
         Instructor_id = instructor_id;
     }
 

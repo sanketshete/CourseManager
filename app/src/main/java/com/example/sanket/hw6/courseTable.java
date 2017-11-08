@@ -23,7 +23,7 @@ public class courseTable {
         sb.append("CREATE TABLE "+TABLENAME+ " (");
         sb.append(COLUMN_ID+" integer primary key autoincrement, ");
         sb.append(TITLE+" text not null, ");
-        sb.append(INSTR_ID+" text not null, ");
+        sb.append(INSTR_ID+" integer, ");
         sb.append(DAY+" text not null);");
         sb.append(TIME+" text not null, ");
         sb.append(AMPM+" text not null, ");

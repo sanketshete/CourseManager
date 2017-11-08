@@ -66,13 +66,14 @@ public class CourseInfoDAO {
         CourseInfo courseInfo=null;
         if(c!=null){
             courseInfo=new CourseInfo();
-            courseInfo.setTitle(c.getString(0));
-            courseInfo.setInstructor_id(c.getString(1));
-            courseInfo.setDay(c.getString(2));
-            courseInfo.setTitle(c.getString(3));
-            courseInfo.setAmpm(c.getString(4));
-            courseInfo.setCredithr(c.getString(5));
-            courseInfo.setSemister(c.getString(6));
+            courseInfo.setCourse_Id(c.getInt(0));
+            courseInfo.setTitle(c.getString(1));
+            courseInfo.setInstructor_id(c.getInt(2));
+            courseInfo.setDay(c.getString(3));
+            courseInfo.setTitle(c.getString(4));
+            courseInfo.setAmpm(c.getString(5));
+            courseInfo.setCredithr(c.getString(6));
+            courseInfo.setSemister(c.getString(7));
         }
         return courseInfo;
     }
