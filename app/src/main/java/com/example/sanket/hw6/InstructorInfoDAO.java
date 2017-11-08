@@ -35,7 +35,7 @@ public class InstructorInfoDAO {
 
     public InstructorInfo getInstructor(Integer id){
         Registerinfo instructorInfo=null;
-        Cursor c=db.rawQuery("SELECT * FROM "+InstructorTable.TABLENAME + " WHERE "+InstructorTable.COLUMN_ID+"=?",new String[]{Integer.toString(id)});
+        Cursor c=db.rawQuery("SELECT * FROM "+InstructorTable.TABLENAME + " WHERE "+InstructorTable.COLUMN_ID+"="+id,null);
         if(c!=null && c.moveToFirst()){
             InstructorInfo instructorInfo1 =buildInstructorInfoFromCursor(c);
             if(!c.isClosed())
