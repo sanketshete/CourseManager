@@ -67,7 +67,7 @@ public class Login extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         final EditText uname = (EditText)view.findViewById(R.id.username);
-        final EditText password = (EditText)view.findViewById(R.id.username);
+        final EditText password = (EditText)view.findViewById(R.id.password);
         view.findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

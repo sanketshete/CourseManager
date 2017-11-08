@@ -1,7 +1,6 @@
 package com.example.sanket.hw6;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -16,12 +16,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link courseManager.OnFragmentInteractionListener} interface
+ * {@link CourseManagerFragmentInteraction} interface
  * to handle interaction events.
  */
 public class courseManager extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    private CourseManagerFragmentInteraction mListener;
     ArrayList<courseInformation> courseList ;
     CourseManagerAdapter adapter ;
     public courseManager() {
@@ -38,23 +38,27 @@ public class courseManager extends Fragment {
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.courseListRv) ;
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity()) ;
+        recyclerView.setLayoutManager(llm);
         adapter = new CourseManagerAdapter(getActivity(),courseList) ;
         recyclerView.setAdapter(adapter);
+        ImageView addCourseButton = (ImageView)view.findViewById(R.id.addCourseCm) ;
+        addCourseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO Implement add course button
+
+            }
+        });
         return view ;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof CourseManagerFragmentInteraction) {
+            mListener = (CourseManagerFragmentInteraction) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement createCourseFragmentInteraction");
@@ -77,8 +81,9 @@ public class courseManager extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface CourseManagerFragmentInteraction {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteractionWithCourseManager(String username);
+        void addCourseOnClick() ;
     }
 }

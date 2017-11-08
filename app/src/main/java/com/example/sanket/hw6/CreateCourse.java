@@ -1,7 +1,6 @@
 package com.example.sanket.hw6;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,16 +40,12 @@ public class CreateCourse extends Fragment {
         adapter = new InstructorAdapter(getActivity(),instructorList) ;
         LinearLayoutManager llm = new LinearLayoutManager(getActivity()) ;
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(adapter);
         return view ;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -81,6 +76,6 @@ public class CreateCourse extends Fragment {
      */
     public interface createCourseFragmentInteraction {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void interactWithCreateCourse(String username);
     }
 }
