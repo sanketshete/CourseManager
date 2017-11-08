@@ -75,7 +75,12 @@ public class AddInstructure extends Fragment {
                     instructorInfo.setInstructor_lname(lname.getText().toString());
                     instructorInfo.setInstructor_email(email.getText().toString());
                     instructorInfo.setInstructor_website(website.getText().toString());
-                    MainActivity.databaseDataManager.saveInstructor(instructorInfo);
+                    if(MainActivity.databaseDataManager.saveInstructor(instructorInfo)!=-1){
+                        Toast.makeText(getActivity(),"Register Successsfully",Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getActivity(),"Not Register Successsfully",Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
 

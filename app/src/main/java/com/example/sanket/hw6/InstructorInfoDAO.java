@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sanket on 11/7/2017.
@@ -31,12 +33,11 @@ public class InstructorInfoDAO {
         return db.insert(InstructorTable.TABLENAME,null,values);
     }
 
-    public InstructorInfo getInstructor(String fname, String lname){
-
+    public InstructorInfo getInstructor(Integer id){
         Registerinfo instructorInfo=null;
-        Cursor c=db.rawQuery("SELECT * FROM "+InstructorTable.TABLENAME + "WHERE "+InstructorTable.FIRST_NAME+"=?" +" & "+ InstructorTable.LAST_NAME +"=?",new String[]{fname,lname});
+        Cursor c=db.rawQuery("SELECT * FROM "+InstructorTable.TABLENAME + " WHERE "+InstructorTable.COLUMN_ID+"=?",new String[]{Integer.toString(id)});
         if(c!=null && c.moveToFirst()){
-            InstructorInfo instructorInfo1 =buildNoteFromCursor(c);
+            InstructorInfo instructorInfo1 =buildInstructorInfoFromCursor(c);
             if(!c.isClosed())
                 c.close();
             return instructorInfo1;
@@ -44,6 +45,25 @@ public class InstructorInfoDAO {
         return null;
     }
 
+    public List<InstructorInfo> getAll(){
+        List<InstructorInfo> instructorInfo1 = new ArrayList<InstructorInfo>();
+        Cursor c=db.query(InstructorTable.TABLENAME,new String[]{InstructorTable.COLUMN_ID,
+                InstructorTable.FIRST_NAME,InstructorTable.LAST_NAME,InstructorTable.EMAIL,InstructorTable.WEBSITE,InstructorTable.INSTR_IMAGE},null,null,null,null,null);
+        if(c!=null && c.moveToFirst()){
+            do{
+                InstructorInfo instructorInfo =buildInstructorInfoFromCursor(c);
+                if(instructorInfo!=null){
+                    instructorInfo1.add(instructorInfo);
+                }
+            }while (c.moveToNext());
+            if(!c.isClosed())
+                c.close();
+
+        }
+        return instructorInfo1;
+    }
+    
+    
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
@@ -55,7 +75,7 @@ public class InstructorInfoDAO {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
-    private InstructorInfo buildNoteFromCursor(Cursor c){
+    private InstructorInfo buildInstructorInfoFromCursor(Cursor c){
         InstructorInfo instructorInfo=null;
         if(c!=null){
             instructorInfo=new InstructorInfo();
