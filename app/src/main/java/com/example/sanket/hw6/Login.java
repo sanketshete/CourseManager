@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -66,14 +68,27 @@ public class Login extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        final EditText uname = (EditText)view.findViewById(R.id.username);
+        final EditText password = (EditText)view.findViewById(R.id.username);
+        view.findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if("".equalsIgnoreCase(uname.getText().toString().trim()) || "".equalsIgnoreCase(password.getText().toString().trim())) {
+                    Toast.makeText(getActivity(),"All fields are mandatory",Toast.LENGTH_LONG).show();
+                }else {
+                    boolean result = MainActivity.databaseDataManager.checkRegisterDAO(uname.getText().toString(), password.getText().toString());
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+                    if (result) {
+                        mListener.gotoCourseManager(uname.getText().toString());
+                    } else {
+                        Toast.makeText(getActivity(), "USername or password is wrong", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
+        return view;
     }
 
     @Override
@@ -105,6 +120,6 @@ public class Login extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        public void gotoCourseManager(String Username);
     }
 }

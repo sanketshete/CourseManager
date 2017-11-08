@@ -1,12 +1,18 @@
 package com.example.sanket.hw6;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
 /**
@@ -16,21 +22,82 @@ import android.view.ViewGroup;
  * to handle interaction events.
  */
 public class AddInstructure extends Fragment {
+    private static final int CAMERA_INTENT_REQUEST = 6 ;
 
+    ImageView im;
+    Bitmap image=null;
     private OnFragmentInteractionListener mListener;
+    final InstructorInfo instructorInfo = new InstructorInfo();
 
     public AddInstructure() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_instructure, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_instructure, container, false);
+
+        final EditText fname = (EditText)view.findViewById(R.id.ifname);
+        final EditText lname = (EditText)view.findViewById(R.id.ilname);
+        final EditText email = (EditText)view.findViewById(R.id.email);
+        final EditText website = (EditText)view.findViewById(R.id.personalWeb);
+        im =(ImageView) view.findViewById(R.id.imageView2);
+        im.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,CAMERA_INTENT_REQUEST);
+            }
+        });
+        view.findViewById(R.id.reset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fname.setText("");
+                lname.setText("");
+                email.setText("");
+                website.setText("");
+            }
+        });
+
+        view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ("".equalsIgnoreCase(fname.getText().toString().trim()) || "".equalsIgnoreCase(email.getText().toString().trim()) ||
+                        "".equalsIgnoreCase(website.getText().toString().trim()) || "".equalsIgnoreCase(lname.getText().toString().trim())
+                        || image ==null) {
+                    Toast.makeText(getActivity(), "All fields are mandatory", Toast.LENGTH_LONG).show();
+                } else {
+                    instructorInfo.setInstructor_fname(fname.getText().toString());
+                    instructorInfo.setInstructor_lname(lname.getText().toString());
+                    instructorInfo.setInstructor_email(email.getText().toString());
+                    instructorInfo.setInstructor_website(website.getText().toString());
+                    MainActivity.databaseDataManager.saveInstructor(instructorInfo);
+                }
+            }
+
+            ;
+
+        });
+        return view;
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CAMERA_INTENT_REQUEST){
+            if(null!=data && null!=data.getExtras() && data.getExtras().containsKey("data")){
+                image =(Bitmap) data.getExtras().get("data");
+                instructorInfo.setImage(image);
+                im.setImageBitmap(image);
+            }
+        }
+
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

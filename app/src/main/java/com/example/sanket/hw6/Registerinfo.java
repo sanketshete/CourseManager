@@ -1,5 +1,7 @@
 package com.example.sanket.hw6;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by sanket on 11/7/2017.
  */
@@ -7,17 +9,27 @@ package com.example.sanket.hw6;
 public class Registerinfo {
 
     String First_name,Last_name,Username,Passowrd;
+    Bitmap image;
 
     public Registerinfo(String first_name, String last_name, String username, String passowrd) {
         First_name = first_name;
         Last_name = last_name;
         Username = username;
         Passowrd = passowrd;
+
     }
 
     public Registerinfo(){
 
 
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 
     public String getFirst_name() {
