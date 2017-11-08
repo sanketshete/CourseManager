@@ -35,7 +35,7 @@ private SQLiteDatabase db;
     public boolean get(String uname, String password){
 
         Registerinfo registerinfo=null;
-        Cursor c=db.rawQuery("SELECT * FROM "+RegisterTable.TABLENAME + "WHERE "+RegisterTable.PASSWORD+"=?" +" & "+ RegisterTable.PASSWORD +"=?",new String[]{uname,password});
+        Cursor c=db.rawQuery("SELECT * FROM "+RegisterTable.TABLENAME + " WHERE "+RegisterTable.USER_NAME+" =? " +" & "+ RegisterTable.PASSWORD +" =?",new String[]{uname,password});
         if(c!=null && c.moveToFirst()){
             if(!c.isClosed())
             c.close();
