@@ -17,6 +17,7 @@ public class DatabaseDataManager {
     private RegisterinfoDAO registerinfoDAO;
     private InstructorInfoDAO instructorInfoDAO;
     private CourseInfoDAO courseInfoDAO;
+    private UserCourseInfoDAO userCourseInfoDAO;
 
     public DatabaseDataManager(Context context){
         this.context=context;
@@ -25,6 +26,7 @@ public class DatabaseDataManager {
         registerinfoDAO=new RegisterinfoDAO(db);
         instructorInfoDAO = new InstructorInfoDAO(db);
         courseInfoDAO = new CourseInfoDAO(db);
+        userCourseInfoDAO = new UserCourseInfoDAO(db);
     }
 
     public void close(){
@@ -60,5 +62,11 @@ public class DatabaseDataManager {
     }
     public CourseInfo getCourse(int id){
         return this.courseInfoDAO.getCourse(id);
+    }
+    public long saveuserCourseInfo(UserCourseInfo userCourseInfo){
+        return this.userCourseInfoDAO.saveuserCourseInfo(userCourseInfo);
+    }
+    public int getcourseId(String username){
+        return this.userCourseInfoDAO.getcourseId(username);
     }
 }
