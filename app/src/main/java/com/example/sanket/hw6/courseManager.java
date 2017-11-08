@@ -35,20 +35,26 @@ public class courseManager extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_course_manager, container, false);
         courseList = new ArrayList<courseInformation>() ;
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.courseListRv) ;
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity()) ;
-        recyclerView.setLayoutManager(llm);
-        adapter = new CourseManagerAdapter(getActivity(),courseList) ;
-        recyclerView.setAdapter(adapter);
         ImageView addCourseButton = (ImageView)view.findViewById(R.id.addCourseCm) ;
         addCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO Implement add course button
-
+                mListener.addCourseOnClick();
             }
         });
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.courseListRv) ;
+        if(courseList == null || courseList.size() == 0) {
+            view.findViewById(R.id.noCourseTvCm).setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            return view;
+        }
+
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity()) ;
+        recyclerView.setLayoutManager(llm);
+        adapter = new CourseManagerAdapter(getActivity(),courseList) ;
+        recyclerView.setAdapter(adapter);
         return view ;
     }
 
