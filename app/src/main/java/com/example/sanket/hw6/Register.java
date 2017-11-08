@@ -58,7 +58,12 @@ public class Register extends Fragment {
                         registerinfo.setPassowrd(pass.getText().toString());
                         registerinfo.setFirst_name(fname.getText().toString());
                         registerinfo.setLast_name(lname.getText().toString());
-                        MainActivity.databaseDataManager.saveUser(registerinfo);
+
+                        if(MainActivity.databaseDataManager.saveUser(registerinfo)!=-1){
+                            Toast.makeText(getActivity(),"Register Successsfully",Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(getActivity(),"Not Register Successsfully",Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
 
