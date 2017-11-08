@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class InstructorTable {
 
     static final String TABLENAME="instructorTable";
+    static final String COLUMN_ID="_id";
     static final String FIRST_NAME ="fname";
     static final String LAST_NAME ="lname";
     static final String EMAIL ="email";
@@ -19,6 +20,7 @@ public class InstructorTable {
     static public void onCreate(SQLiteDatabase db){
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE "+TABLENAME+ " (");
+        sb.append(COLUMN_ID+" integer primary key autoincrement, ");
         sb.append(FIRST_NAME+" text not null, ");
         sb.append(LAST_NAME+" text not null);");
         sb.append(EMAIL+" text not null, ");

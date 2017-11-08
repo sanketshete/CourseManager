@@ -43,9 +43,11 @@ public class DatabaseDataManager {
         return this.instructorInfoDAO.saveinstructor(instructorInfo);
     }
 
-    public InstructorInfo getinstructor(String fname,String lname){
-        return this.instructorInfoDAO.getInstructor(fname,lname);
+    public InstructorInfo getinstructor(int id){
+        return this.instructorInfoDAO.getInstructor(id);
     }
-
+    public List<InstructorInfo> getAll(){
+        return this.instructorInfoDAO.getAll();
+    }
 
 }
