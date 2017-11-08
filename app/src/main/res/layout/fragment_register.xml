@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.sanket.hw6.Register">
 
-
     <ImageView
         android:id="@+id/addphoto"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="18dp"
         app:srcCompat="@drawable/add_photo"
+        android:onClick="getImage"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

@@ -1,58 +1,89 @@
 package com.example.sanket.hw6;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Register.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
+
 public class Register extends Fragment {
-
-    private OnFragmentInteractionListener mListener;
-
+    private static final int CAMERA_INTENT_REQUEST = 5 ;
+    private Bitmap image=null;
+    ImageView im;
+    final Registerinfo registerinfo = new Registerinfo();
     public Register() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
+        final View view = inflater.inflate(R.layout.fragment_register, container, false);
+
+
+        final EditText uname = (EditText)view.findViewById(R.id.uname);
+        final EditText lname = (EditText)view.findViewById(R.id.lname);
+        final EditText fname = (EditText)view.findViewById(R.id.fname);
+        final EditText pass = (EditText)view.findViewById(R.id.pass);
+           im = (ImageView)view.findViewById(R.id.addphoto);
+        im.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,CAMERA_INTENT_REQUEST);
+            }
+        });
+            view.findViewById(R.id.register).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if ("".equalsIgnoreCase(uname.getText().toString().trim()) || "".equalsIgnoreCase(pass.getText().toString().trim()) ||
+                            "".equalsIgnoreCase(fname.getText().toString().trim()) || "".equalsIgnoreCase(lname.getText().toString().trim())
+                            ||image==null) {
+                        Toast.makeText(getActivity(), "All fields are mandatory", Toast.LENGTH_LONG).show();
+                    } else {
+                        registerinfo.setUsername(uname.getText().toString());
+                        registerinfo.setPassowrd(pass.getText().toString());
+                        registerinfo.setFirst_name(fname.getText().toString());
+                        registerinfo.setLast_name(lname.getText().toString());
+                        MainActivity.databaseDataManager.saveUser(registerinfo);
+                    }
+                }
+
+                ;
+
+            });
+     return  view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CAMERA_INTENT_REQUEST){
+            if(null!=data && null!=data.getExtras() && data.getExtras().containsKey("data")){
+                image =(Bitmap) data.getExtras().get("data");
+                registerinfo.setImage(image);
+                im.setImageBitmap(image);
+            }
         }
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -65,8 +96,5 @@ public class Register extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

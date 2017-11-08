@@ -14,13 +14,15 @@ public class DatabaseDataManager {
    private Context context;
     private DatabaseOpenHelper databaseOpenHelper;
     private SQLiteDatabase db;
-    private NoteDAO noteDAO;
+    private RegisterinfoDAO registerinfoDAO;
+    private InstructorInfoDAO instructorInfoDAO;
 
     public DatabaseDataManager(Context context){
         this.context=context;
         databaseOpenHelper = new DatabaseOpenHelper(this.context);
         db= databaseOpenHelper.getWritableDatabase();
-        noteDAO=new NoteDAO(db);
+        registerinfoDAO=new RegisterinfoDAO(db);
+        instructorInfoDAO = new InstructorInfoDAO(db);
     }
 
     public void close(){
@@ -28,27 +30,22 @@ public class DatabaseDataManager {
             db.close();
         }
     }
-    public NoteDAO getNoteDAO(){
 
-        return this.noteDAO;
-    }
-    public long saveNote(Note note){
-        return this.noteDAO.save(note);
+    public long saveUser(Registerinfo registerinfo){
+        return this.registerinfoDAO.save(registerinfo);
     }
 
-    public boolean updateNote(Note note){
-        return this.noteDAO.update(note);
+    public boolean checkRegisterDAO(String uname,String password){
+        return this.registerinfoDAO.get(uname,password);
     }
 
-    public boolean DeleteNote(Note note){
-        return this.noteDAO.delete(note);
+    public long saveInstructor(InstructorInfo instructorInfo){
+        return this.instructorInfoDAO.saveinstructor(instructorInfo);
     }
 
-    public Note getNote(long id){
-        return this.noteDAO.get(id);
+    public InstructorInfo getinstructor(String fname,String lname){
+        return this.instructorInfoDAO.getInstructor(fname,lname);
     }
-    public List<Note> getAllNote(){
-        return this.noteDAO.getAll();
-    }
+
 
 }

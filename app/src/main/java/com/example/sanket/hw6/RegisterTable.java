@@ -9,20 +9,21 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class RegisterTable {
     static final String TABLENAME="registerTable";
-    static final String COLUMN_ID ="_id";
-    static final String COLUMN_SUBJECT ="subject";
-    static final String COLUMN_TEXT ="text";
-
+    static final String FIRST_NAME ="fname";
+    static final String LAST_NAME ="lname";
+    static final String USER_NAME ="uname";
+    static final String USER_Image ="uimage";
+    static final String PASSWORD ="password";
 
     static public void onCreate(SQLiteDatabase db){
-
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE "+TABLENAME+ " (");
-        sb.append(COLUMN_ID+" integer primary key autoincrement, ");
-        sb.append(COLUMN_SUBJECT+" text not null, ");
-        sb.append(COLUMN_TEXT+" text not null);");
+        sb.append(USER_NAME+" text primary key, ");
+        sb.append(PASSWORD+" text not null, ");
+        sb.append(FIRST_NAME+" text not null, ");
+        sb.append(LAST_NAME+" text not null);");
+        sb.append(USER_Image+" blob not null, ");
         try{
-
 
             db.execSQL(sb.toString());
         }catch (SQLException ex){
