@@ -10,6 +10,16 @@ public class InstructorInfo {
 
     String Instructor_fname,Instructor_lname,Instructor_email,Instructor_website;
     Bitmap image;
+    int instr_ID;
+
+    public int getInstr_ID() {
+        return instr_ID;
+    }
+
+    public void setInstr_ID(int instr_ID) {
+        this.instr_ID = instr_ID;
+    }
+
     boolean isChecked = false ;
 
     public boolean isChecked() {

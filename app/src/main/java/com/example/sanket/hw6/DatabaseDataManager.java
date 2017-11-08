@@ -16,6 +16,8 @@ public class DatabaseDataManager {
     private SQLiteDatabase db;
     private RegisterinfoDAO registerinfoDAO;
     private InstructorInfoDAO instructorInfoDAO;
+    private CourseInfoDAO courseInfoDAO;
+    private UserCourseInfoDAO userCourseInfoDAO;
 
     public DatabaseDataManager(Context context){
         this.context=context;
@@ -23,6 +25,8 @@ public class DatabaseDataManager {
         db= databaseOpenHelper.getWritableDatabase();
         registerinfoDAO=new RegisterinfoDAO(db);
         instructorInfoDAO = new InstructorInfoDAO(db);
+        courseInfoDAO = new CourseInfoDAO(db);
+        userCourseInfoDAO = new UserCourseInfoDAO(db);
     }
 
     public void close(){
@@ -49,5 +53,20 @@ public class DatabaseDataManager {
     public List<InstructorInfo> getAll(){
         return this.instructorInfoDAO.getAll();
     }
+    public long saveCourse(CourseInfo courseInfo){
+        return this.courseInfoDAO.saveCourse(courseInfo);
+    }
 
+    public List<CourseInfo> getAllCourses(){
+        return this.courseInfoDAO.getAllCourse();
+    }
+    public CourseInfo getCourse(int id){
+        return this.courseInfoDAO.getCourse(id);
+    }
+    public long saveuserCourseInfo(UserCourseInfo userCourseInfo){
+        return this.userCourseInfoDAO.saveuserCourseInfo(userCourseInfo);
+    }
+    public int getcourseId(String username){
+        return this.userCourseInfoDAO.getcourseId(username);
+    }
 }
