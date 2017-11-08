@@ -10,7 +10,17 @@ public class InstructorInfo {
 
     String Instructor_fname,Instructor_lname,Instructor_email,Instructor_website;
     Bitmap image;
-//hii
+    boolean isChecked = false ;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    //hii
     public Bitmap getImage() {
         return image;
     }
@@ -49,5 +59,17 @@ public class InstructorInfo {
 
     public void setInstructor_website(String instructor_website) {
         Instructor_website = instructor_website;
+    }
+
+    @Override
+    public String toString() {
+        return "InstructorInfo{" +
+                "Instructor_fname='" + Instructor_fname + '\'' +
+                ", Instructor_lname='" + Instructor_lname + '\'' +
+                ", Instructor_email='" + Instructor_email + '\'' +
+                ", Instructor_website='" + Instructor_website + '\'' +
+                ", image=" + image +
+                ", isChecked=" + isChecked +
+                '}';
     }
 }

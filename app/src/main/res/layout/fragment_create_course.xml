@@ -40,10 +40,9 @@
         android:text="Choose Instructor" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/ChooseInstructorRv"
         android:orientation="horizontal"
         android:scrollbars="horizontal"
-        android:layout_below="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="160dp"/>
 
