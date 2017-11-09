@@ -12,15 +12,18 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddInstructure.OnFragmentInteractionListener} interface
+ * {@link AddInstructure.AddInstructureFragmentInteraction} interface
  * to handle interaction events.
  */
 public class AddInstructure extends Fragment {
@@ -56,14 +59,35 @@ public class AddInstructure extends Fragment {
             }
         });
 
-
-        view.findViewById(R.id.reset).setOnClickListener(new View.OnClickListener() {
+        final Button resetBtn =(Button) view.findViewById(R.id.reset);
+        resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fname.setText("");
-                lname.setText("");
-                email.setText("");
-                website.setText("");
+                android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(getActivity());
+                builder1.setMessage("Are you sure you want to reset ?");
+                builder1.setCancelable(false);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                fname.setText("");
+                                lname.setText("");
+                                email.setText("");
+                                website.setText("");
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                android.app.AlertDialog alert11 = builder1.create();
+                alert11.show();
 
             }
         });
@@ -76,16 +100,19 @@ public class AddInstructure extends Fragment {
                         || image ==null) {
                     Toast.makeText(getActivity(), "All fields are mandatory", Toast.LENGTH_LONG).show();
                 } else {
-                    instructorInfo.setInstructor_fname(fname.getText().toString());
-                    instructorInfo.setInstructor_lname(lname.getText().toString());
-                    instructorInfo.setInstructor_email(email.getText().toString());
-                    instructorInfo.setInstructor_website(website.getText().toString());
-                    if(MainActivity.databaseDataManager.saveInstructor(instructorInfo)!=-1){
-                        Toast.makeText(getActivity(),"Instructor Added Successsfully",Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getActivity(),"Failed to add instructor",Toast.LENGTH_LONG).show();
+                    if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+                        Toast.makeText(getActivity(), "Put a valid email address", Toast.LENGTH_LONG).show();
+                    }else {
+                        instructorInfo.setInstructor_fname(fname.getText().toString());
+                        instructorInfo.setInstructor_lname(lname.getText().toString());
+                        instructorInfo.setInstructor_email(email.getText().toString());
+                        instructorInfo.setInstructor_website(website.getText().toString());
+                        if (MainActivity.databaseDataManager.saveInstructor(instructorInfo) != -1) {
+                            Toast.makeText(getActivity(), "Instructor Added Successsfully", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Failed to add instructor", Toast.LENGTH_LONG).show();
+                        }
                     }
-
                 }
             }
 
@@ -94,7 +121,6 @@ public class AddInstructure extends Fragment {
         });
         return view;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
