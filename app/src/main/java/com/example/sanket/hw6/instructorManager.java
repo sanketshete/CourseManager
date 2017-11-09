@@ -43,7 +43,7 @@ public class instructorManager extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_instructor_manager, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.InstructorListRv) ;
-        instructor_infoList = this.getInstructor_infoList();
+        instructor_infoList = MainActivity.databaseDataManager.getAll();
         if(instructor_infoList == null || instructor_infoList.size() == 0) {
             view.findViewById(R.id.noInstructorTvCm).setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
