@@ -1,6 +1,8 @@
 package com.example.sanket.hw6;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -111,14 +113,26 @@ public class CreateCourse extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText etv = (EditText) view.findViewById(R.id.hoursCC) ;
+                if("".equalsIgnoreCase(etv.getText().toString()) || etv.getText() == null) {
+                    Toast.makeText(getActivity(), "One or more mandatory fields missing!", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
                 StringBuilder sb = new StringBuilder(etv.getText().toString()) ;
                 etv = (EditText)view.findViewById(R.id.minutesCC) ;
+                if("".equalsIgnoreCase(etv.getText().toString()) || etv.getText() == null) {
+                    Toast.makeText(getActivity(), "One or more mandatory fields missing!", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
                 sb.append(":"+etv.getText().toString()) ;
                 newCourseInfo.setTime(sb.toString());
                 etv=(EditText)view.findViewById(R.id.courseTitleEt) ;
                 newCourseInfo.setTitle(etv.getText().toString());
                 CourseInfo obj = convertObject(newCourseInfo) ;
                 Log.d("json",obj.toString()) ;
+                if(!checkForMandatoryFields(obj)) {
+                    Toast.makeText(getActivity(), "One or more mandatory fields missing!", Toast.LENGTH_SHORT).show();
+                return;
+                }
                 long l = MainActivity.databaseDataManager.saveCourse(obj) ;
                 Log.d("json",String.valueOf(l)) ;
                 if(l==-1) {
@@ -130,6 +144,23 @@ public class CreateCourse extends Fragment {
                 }
             }
         });
+    }
+
+    private boolean checkForMandatoryFields(CourseInfo course) {
+        boolean allEntered = true ;
+        if("".equalsIgnoreCase(course.getTitle().trim()) || course.getTitle() == null) {
+            return !allEntered ;
+        }
+        if("".equalsIgnoreCase(course.getTime().trim()) || course.getTime() == null) {
+            return !allEntered ;
+        }
+        if("".equalsIgnoreCase(course.getCredithr()) || course.getCredithr() == null) {
+            return !allEntered ;
+        }
+        if(course.getInstructor_id() == -1) {
+            return !allEntered ;
+        }
+        return allEntered ;
     }
 
     public CourseInfo convertObject(courseInformation ci) {
@@ -152,24 +183,51 @@ public class CreateCourse extends Fragment {
     public void setOnClickListenerForReset(Button resetBtn,View originalView) {
 
         final View view = originalView ;
+
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newCourseInfo = new courseInformation() ;
-                EditText tv = (EditText)view.findViewById(R.id.courseTitleEt) ;
-                tv.setText("");
-                EditText etv = (EditText) view.findViewById(R.id.hoursCC) ;
-                etv.setText("");
-                etv = (EditText)view.findViewById(R.id.minutesCC) ;
-                etv.setText("");
-                Spinner s = (Spinner)view.findViewById(R.id.daySp) ;
-                s.setSelection(0);
-                s = (Spinner)view.findViewById(R.id.amPmSp) ;
-                s.setSelection(0);
-                s = (Spinner)view.findViewById(R.id.semesterSp) ;
-                s.setSelection(0);
-                RadioGroup rg = (RadioGroup)view.findViewById(R.id.creditsRG) ;
-                rg.clearCheck();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+                builder1.setMessage("Are you sure you want to reset ?");
+                builder1.setCancelable(false);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                newCourseInfo = new courseInformation() ;
+                                EditText tv = (EditText)view.findViewById(R.id.courseTitleEt) ;
+                                tv.setText("");
+                                EditText etv = (EditText) view.findViewById(R.id.hoursCC) ;
+                                etv.setText("");
+                                etv = (EditText)view.findViewById(R.id.minutesCC) ;
+                                etv.setText("");
+                                Spinner s = (Spinner)view.findViewById(R.id.daySp) ;
+                                s.setSelection(0);
+                                s = (Spinner)view.findViewById(R.id.amPmSp) ;
+                                s.setSelection(0);
+                                s = (Spinner)view.findViewById(R.id.semesterSp) ;
+                                s.setSelection(0);
+                                RadioGroup rg = (RadioGroup)view.findViewById(R.id.creditsRG) ;
+                                rg.clearCheck();
+                                for(int i=0 ; i<adapter.instructorList.size() ; i++){
+                                    adapter.instructorList.get(i).setChecked(false);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
             }
         });
 
