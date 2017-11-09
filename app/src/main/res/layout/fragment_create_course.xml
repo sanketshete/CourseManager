@@ -87,9 +87,10 @@
         android:layout_gravity="center"
         android:text="Time" />
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:inputType="datetime"
         android:id="@+id/hoursCC"/>
     <TextView
         android:id="@+id/col1"
@@ -97,8 +98,9 @@
         android:layout_height="wrap_content"
         android:text=":"/>
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
+        android:inputType="datetime"
         android:id="@+id/minutesCC"/>
     <Spinner
         android:layout_width="wrap_content"

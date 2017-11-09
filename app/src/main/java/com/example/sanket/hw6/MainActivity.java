@@ -11,9 +11,12 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity implements Login.OnFragmentInteractionListener,
         CreateCourse.createCourseFragmentInteraction,
 courseManager.CourseManagerFragmentInteraction,
-        AddInstructure.AddInstructureFragmentInteraction{
+        AddInstructure.AddInstructureFragmentInteraction,
+CourseManagerAdapter.changeFragment,
+CourseDetail.CourseDetailFragmentInteraction{
 
     public  static DatabaseDataManager databaseDataManager;
+    public static CourseInfo courseDetailObj ;
     String userName ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,5 +120,21 @@ courseManager.CourseManagerFragmentInteraction,
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+
+    @Override
+    public void goToCourseDetailFragment(CourseInfo courseInfo) {
+        CourseDetail ccFragment = new CourseDetail();
+        courseDetailObj = courseInfo ;
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,ccFragment,"Coursedetail")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public CourseInfo onInteractionWithCourseDetail() {
+        return courseDetailObj;
     }
 }
