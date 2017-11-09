@@ -19,6 +19,7 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
     public Context context ;
     public List<CourseInfo> courseList ;
     public List<InstructorInfo> instructorList ;
+    changeFragment cf ;
 
     public Context getContext() {
         return context;
@@ -55,11 +56,18 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
 
     @Override
     public void onBindViewHolder(CourseManagerViewHolder holder, int position) {
-    CourseInfo course = courseList.get(position) ;
+    final CourseInfo course = courseList.get(position) ;
         holder.courseTitle.setText(course.getTitle()) ;
         holder.courseInstructor.setText(course.getInstructorName());
         holder.courseTime.setText(course.getDay() + " " + course.getTime());
         holder.courseImage.setImageBitmap(getInstructorImageFromId(course.getInstructor_id()));
+        course.setInstructorImage(getInstructorImageFromId(course.getInstructor_id()));
+        holder.ownView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cf.goToCourseDetailFragment(course);
+            }
+        });
     }
 
     private Bitmap getInstructorImageFromId(int id) {
@@ -82,6 +90,7 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
     public class CourseManagerViewHolder extends RecyclerView.ViewHolder {
         TextView courseTitle,courseInstructor,courseTime ;
         ImageView courseImage ;
+        View ownView ;
 
         public CourseManagerViewHolder(View view) {
             super(view) ;
@@ -89,11 +98,17 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
             courseInstructor = (TextView) view.findViewById(R.id.courseInstructor) ;
             courseTime = (TextView) view.findViewById(R.id.courseTime) ;
             courseImage = (ImageView)view.findViewById(R.id.courseImage) ;
+            ownView = view ;
         }
     }
 
     public CourseManagerAdapter(Context context, List<CourseInfo> courseList) {
         this.context = context ;
         this.courseList = courseList ;
+        cf = (changeFragment)context;
+    }
+
+    public interface changeFragment {
+        void goToCourseDetailFragment(CourseInfo courseInfo) ;
     }
 }

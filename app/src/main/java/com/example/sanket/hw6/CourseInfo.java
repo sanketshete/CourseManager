@@ -1,5 +1,7 @@
 package com.example.sanket.hw6;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by sanket on 11/8/2017.
  */
@@ -7,6 +9,15 @@ package com.example.sanket.hw6;
 public class CourseInfo {
     String title,day,time,ampm,credithr,semister,instructorName;
     int Instructor_id,course_Id;
+    private Bitmap instructorImage ;
+
+    public Bitmap getInstructorImage() {
+        return instructorImage;
+    }
+
+    public void setInstructorImage(Bitmap instructorImage) {
+        this.instructorImage = instructorImage;
+    }
 
     public String getInstructorName() {
         return instructorName;

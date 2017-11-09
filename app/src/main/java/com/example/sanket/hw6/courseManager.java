@@ -64,6 +64,7 @@ public class courseManager extends Fragment {
         adapter = new CourseManagerAdapter(getActivity(),courseList) ;
         adapter.setInstructorList(iList);
         recyclerView.setAdapter(adapter);
+
         return view ;
     }
 
