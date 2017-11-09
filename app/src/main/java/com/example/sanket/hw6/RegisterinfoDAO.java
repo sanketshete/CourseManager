@@ -4,9 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sanket on 10/23/2017.
@@ -26,18 +27,15 @@ private SQLiteDatabase db;
         values.put(RegisterTable.PASSWORD,registerinfo.getPassowrd());
         values.put(RegisterTable.FIRST_NAME,registerinfo.getFirst_name());
         values.put(RegisterTable.LAST_NAME,registerinfo.getLast_name());
-        //values.put(RegisterTable.USER_Image,data);
+        values.put(RegisterTable.USER_Image,data);
 
-        long l = db.insert(RegisterTable.TABLENAME,null,values);
-        Log.d("query",String.valueOf(l)) ;
-        return l ;
+        return db.insert(RegisterTable.TABLENAME,null,values);
     }
 
     public boolean get(String uname, String password){
 
         Registerinfo registerinfo=null;
-        Cursor c=db.rawQuery("SELECT * FROM "+RegisterTable.TABLENAME + " WHERE "+RegisterTable.USER_NAME+" = " + "'"+uname+"'" +" AND "+ RegisterTable.PASSWORD +" = " + "'"+password+"'",null);
-        Log.d("query",String.valueOf(c) + " " + String.valueOf(c.getCount())) ;
+        Cursor c=db.rawQuery("SELECT * FROM "+RegisterTable.TABLENAME + " WHERE "+RegisterTable.USER_NAME+" =? " +" & "+ RegisterTable.PASSWORD +" =?",new String[]{uname,password});
         if(c!=null && c.moveToFirst()){
             if(!c.isClosed())
             c.close();

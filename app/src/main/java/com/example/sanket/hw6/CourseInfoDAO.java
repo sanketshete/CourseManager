@@ -60,6 +60,12 @@ public class CourseInfoDAO {
         }
         return courseInfo1;
     }
+
+    public boolean deleteCourse(int id)
+    {
+        return db.delete(courseTable.TABLENAME,courseTable.COLUMN_ID +"=?",new String[]{String.valueOf(id)})>0;
+    }
+
     private CourseInfo buildCourseInfoFromCursor(Cursor c){
         CourseInfo courseInfo=null;
         if(c!=null){

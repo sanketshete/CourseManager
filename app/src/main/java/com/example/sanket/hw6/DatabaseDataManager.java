@@ -69,4 +69,13 @@ public class DatabaseDataManager {
     public int getcourseId(String username){
         return this.userCourseInfoDAO.getcourseId(username);
     }
+    public boolean deleteCourse(int id){
+       return this.courseInfoDAO.deleteCourse(id);
+    }
+
+    public boolean deleteInstructor(int id){
+        return this.instructorInfoDAO.deleteInstructor(id);
+    }
+
 }
+
