@@ -22,10 +22,10 @@ public class InstructorTable {
         sb.append("CREATE TABLE "+TABLENAME+ " (");
         sb.append(COLUMN_ID+" integer primary key autoincrement, ");
         sb.append(FIRST_NAME+" text not null, ");
-        sb.append(LAST_NAME+" text not null);");
+        sb.append(LAST_NAME+" text not null, ");
         sb.append(EMAIL+" text not null, ");
         sb.append(WEBSITE+" text not null, ");
-        sb.append(INSTR_IMAGE+" blob not null, ");
+        sb.append(INSTR_IMAGE+" blob not null); ");
 
         try{
 
@@ -36,7 +36,7 @@ public class InstructorTable {
     }
     static public void onUpgrade(SQLiteDatabase db,int oldVseion,int newVersio){
         db.execSQL("DROP TABLE IF EXIST" + TABLENAME);
-        RegisterTable.onCreate(db);
+        InstructorTable.onCreate(db);
 
     }
 }

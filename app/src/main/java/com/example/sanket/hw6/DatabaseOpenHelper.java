@@ -21,6 +21,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         RegisterTable.onCreate(sqLiteDatabase);
+        InstructorTable.onCreate(sqLiteDatabase);
+        courseTable.onCreate(sqLiteDatabase);
+        UserCourseTable.onCreate(sqLiteDatabase);
     }
 
     @Override

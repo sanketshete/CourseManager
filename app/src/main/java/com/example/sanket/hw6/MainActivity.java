@@ -1,5 +1,6 @@
 package com.example.sanket.hw6;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,9 +10,11 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements Login.OnFragmentInteractionListener,
         CreateCourse.createCourseFragmentInteraction,
-courseManager.CourseManagerFragmentInteraction{
+courseManager.CourseManagerFragmentInteraction,
+        AddInstructure.AddInstructureFragmentInteraction{
 
     public  static DatabaseDataManager databaseDataManager;
+    String userName ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,12 +26,35 @@ courseManager.CourseManagerFragmentInteraction{
 
     @Override
     public void gotoCourseManager(String Username) {
+        userName = Username ;
         courseManager courseManager1 = new courseManager();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container,courseManager1,"first")
                 .addToBackStack(null)
                 .commit();
     }
+
+    public void goToAddInstructor() {
+        AddInstructure courseManager1 = new AddInstructure();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,courseManager1,"addinstructor")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void goToInstructorManager() {
+
+    }
+
+    public void logOut() {
+        Login courseManager1 = new Login();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,courseManager1,"login")
+                .addToBackStack(null)
+                .commit();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,15 +66,15 @@ courseManager.CourseManagerFragmentInteraction{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menuHome) {
-
+            gotoCourseManager(null);
         }else if(item.getItemId() == R.id.menuAddInstructor) {
-
+                goToAddInstructor();
         }else if(item.getItemId() == R.id.menuExit) {
-
+                finishAffinity();
         }else if(item.getItemId() == R.id.menuInstructor) {
-
+            goToInstructorManager();
         }else if(item.getItemId() == R.id.menuLogout) {
-
+            logOut();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -74,7 +100,8 @@ courseManager.CourseManagerFragmentInteraction{
     }
 
     @Override
-    public void onFragmentInteractionWithCourseManager(String username) {
+    public String onFragmentInteractionWithCourseManager() {
+        return userName ;
 
     }
 
@@ -85,5 +112,10 @@ courseManager.CourseManagerFragmentInteraction{
                 .replace(R.id.container,ccFragment,"createCourse")
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

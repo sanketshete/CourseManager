@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,8 +23,9 @@ import java.util.ArrayList;
 public class courseManager extends Fragment {
 
     private CourseManagerFragmentInteraction mListener;
-    ArrayList<courseInformation> courseList ;
+    List<CourseInfo> courseList ;
     CourseManagerAdapter adapter ;
+    public String userName ;
     public courseManager() {
         // Required empty public constructor
     }
@@ -34,7 +36,13 @@ public class courseManager extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_course_manager, container, false);
-        courseList = new ArrayList<courseInformation>() ;
+
+        userName = mListener.onFragmentInteractionWithCourseManager() ;
+        courseList = MainActivity.databaseDataManager.getAllCourses() ;
+        List<InstructorInfo> iList = MainActivity.databaseDataManager.getAll() ;
+        if(courseList == null) {
+            courseList = new ArrayList<CourseInfo>() ;
+        }
         ImageView addCourseButton = (ImageView)view.findViewById(R.id.addCourseCm) ;
         addCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +62,7 @@ public class courseManager extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity()) ;
         recyclerView.setLayoutManager(llm);
         adapter = new CourseManagerAdapter(getActivity(),courseList) ;
+        adapter.setInstructorList(iList);
         recyclerView.setAdapter(adapter);
         return view ;
     }
@@ -89,7 +98,7 @@ public class courseManager extends Fragment {
      */
     public interface CourseManagerFragmentInteraction {
         // TODO: Update argument type and name
-        void onFragmentInteractionWithCourseManager(String username);
+        String onFragmentInteractionWithCourseManager();
         void addCourseOnClick() ;
     }
 }

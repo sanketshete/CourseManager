@@ -5,8 +5,17 @@ package com.example.sanket.hw6;
  */
 
 public class CourseInfo {
-    String title,day,time,ampm,credithr,semister;
+    String title,day,time,ampm,credithr,semister,instructorName;
     int Instructor_id,course_Id;
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -69,5 +78,20 @@ public class CourseInfo {
 
     public void setSemister(String semister) {
         this.semister = semister;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseInfo{" +
+                "title='" + title + '\'' +
+                ", day='" + day + '\'' +
+                ", time='" + time + '\'' +
+                ", ampm='" + ampm + '\'' +
+                ", credithr='" + credithr + '\'' +
+                ", semister='" + semister + '\'' +
+                ", instructorName='" + instructorName + '\'' +
+                ", Instructor_id=" + Instructor_id +
+                ", course_Id=" + course_Id +
+                '}';
     }
 }

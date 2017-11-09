@@ -26,7 +26,7 @@ public class AddInstructure extends Fragment {
 
     ImageView im;
     Bitmap image=null;
-    private OnFragmentInteractionListener mListener;
+    private AddInstructureFragmentInteraction mListener;
     final InstructorInfo instructorInfo = new InstructorInfo();
 
     public AddInstructure() {
@@ -76,9 +76,9 @@ public class AddInstructure extends Fragment {
                     instructorInfo.setInstructor_email(email.getText().toString());
                     instructorInfo.setInstructor_website(website.getText().toString());
                     if(MainActivity.databaseDataManager.saveInstructor(instructorInfo)!=-1){
-                        Toast.makeText(getActivity(),"Register Successsfully",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),"Instructor Added Successsfully",Toast.LENGTH_LONG).show();
                     }else{
-                        Toast.makeText(getActivity(),"Not Register Successsfully",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),"Failed to add instructor",Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -113,8 +113,8 @@ public class AddInstructure extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof AddInstructureFragmentInteraction) {
+            mListener = (AddInstructureFragmentInteraction) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement createCourseFragmentInteraction");
@@ -137,7 +137,7 @@ public class AddInstructure extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface AddInstructureFragmentInteraction {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }

@@ -30,7 +30,7 @@ public class UserCourseTable {
     }
     static public void onUpgrade(SQLiteDatabase db,int oldVseion,int newVersio){
         db.execSQL("DROP TABLE IF EXIST" + TABLENAME);
-        RegisterTable.onCreate(db);
+        UserCourseTable.onCreate(db);
 
     }
 

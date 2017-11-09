@@ -3,9 +3,7 @@ package com.example.sanket.hw6;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +45,7 @@ public class CourseInfoDAO {
 
     public List<CourseInfo> getAllCourse(){
         List<CourseInfo> courseInfo1 = new ArrayList<CourseInfo>();
-        Cursor c=db.query(courseTable.TABLENAME,new String[]{courseTable.TITLE,
+        Cursor c=db.query(courseTable.TABLENAME,new String[]{courseTable.COLUMN_ID,courseTable.TITLE,
                 courseTable.INSTR_ID,courseTable.DAY,courseTable.TIME,courseTable.AMPM,courseTable.CREDIT_HR,courseTable.SEMESTER},null,null,null,null,null);
         if(c!=null && c.moveToFirst()){
             do{
@@ -70,7 +68,7 @@ public class CourseInfoDAO {
             courseInfo.setTitle(c.getString(1));
             courseInfo.setInstructor_id(c.getInt(2));
             courseInfo.setDay(c.getString(3));
-            courseInfo.setTitle(c.getString(4));
+            courseInfo.setTime(c.getString(4));
             courseInfo.setAmpm(c.getString(5));
             courseInfo.setCredithr(c.getString(6));
             courseInfo.setSemister(c.getString(7));

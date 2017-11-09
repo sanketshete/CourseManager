@@ -24,11 +24,11 @@ public class courseTable {
         sb.append(COLUMN_ID+" integer primary key autoincrement, ");
         sb.append(TITLE+" text not null, ");
         sb.append(INSTR_ID+" integer, ");
-        sb.append(DAY+" text not null);");
+        sb.append(DAY+" text not null, ");
         sb.append(TIME+" text not null, ");
         sb.append(AMPM+" text not null, ");
         sb.append(CREDIT_HR+" text not null, ");
-        sb.append(SEMESTER+" text not null, ");
+        sb.append(SEMESTER+" text not null ); ");
 
         try{
             db.execSQL(sb.toString());
@@ -38,7 +38,7 @@ public class courseTable {
     }
     static public void onUpgrade(SQLiteDatabase db,int oldVseion,int newVersio){
         db.execSQL("DROP TABLE IF EXIST" + TABLENAME);
-        RegisterTable.onCreate(db);
+        courseTable.onCreate(db);
 
     }
 

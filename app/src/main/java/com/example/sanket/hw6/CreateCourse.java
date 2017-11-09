@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +51,10 @@ public class CreateCourse extends Fragment {
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.ChooseInstructorRv) ;
         recyclerView.setLayoutManager(llm);
         recyclerView.setHasFixedSize(true);
-        instructorList = new ArrayList<InstructorInfo>() ;
+        instructorList = MainActivity.databaseDataManager.getAll() ;
+        if(instructorList == null) {
+            instructorList = new ArrayList<InstructorInfo>();
+        }
         adapter = new InstructorAdapter(getActivity(),instructorList) ;
         recyclerView.setAdapter(adapter);
         newCourseInfo = new courseInformation() ;
@@ -76,9 +80,9 @@ public class CreateCourse extends Fragment {
             recyclerView.setVisibility(View.GONE);
             view.findViewById(R.id.noInstructorTvCC).setVisibility(View.VISIBLE);
         }
-        Button createBtn = (Button)view.findViewById(R.id.createbtn) ;
-        setOnClickListenerForCreate(createBtn,newCourseInfo);
-        Button resetBtn = (Button)view.findViewById(R.id.resetbtn) ;
+        Button createBtn = (Button)view.findViewById(R.id.createBtn) ;
+        setOnClickListenerForCreate(createBtn,view);
+        Button resetBtn = (Button)view.findViewById(R.id.resetBtn) ;
         setOnClickListenerForReset(resetBtn,view);
         RadioGroup rg = (RadioGroup)view.findViewById(R.id.creditsRG) ;
         setOnCheckedChangeListenerForCredits(rg);
@@ -101,14 +105,47 @@ public class CreateCourse extends Fragment {
 
     }
 
-    public void setOnClickListenerForCreate(Button createBtn,courseInformation ci) {
-        Log.d("query",String.valueOf(ci)) ;
+    public void setOnClickListenerForCreate(Button createBtn,View oView) {
+        final View view = oView ;
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EditText etv = (EditText) view.findViewById(R.id.hoursCC) ;
+                StringBuilder sb = new StringBuilder(etv.getText().toString()) ;
+                etv = (EditText)view.findViewById(R.id.minutesCC) ;
+                sb.append(":"+etv.getText().toString()) ;
+                newCourseInfo.setTime(sb.toString());
+                etv=(EditText)view.findViewById(R.id.courseTitleEt) ;
+                newCourseInfo.setTitle(etv.getText().toString());
+                CourseInfo obj = convertObject(newCourseInfo) ;
+                Log.d("json",obj.toString()) ;
+                long l = MainActivity.databaseDataManager.saveCourse(obj) ;
+                Log.d("json",String.valueOf(l)) ;
+                if(l==-1) {
+                    Toast.makeText(getActivity(), "Failed to create course", Toast.LENGTH_SHORT).show();
+                    return ;
+                }else{
+                    Toast.makeText(getActivity(), "Course created successfully!", Toast.LENGTH_SHORT).show();
+                        return ;
+                }
             }
         });
+    }
+
+    public CourseInfo convertObject(courseInformation ci) {
+        CourseInfo courseInfo = new CourseInfo() ;
+        courseInfo.setTitle(ci.getTitle());
+        courseInfo.setDay(ci.getDay());
+        courseInfo.setAmpm(ci.getAmPm()) ;
+        courseInfo.setCredithr(ci.getCredit());
+        courseInfo.setTime(ci.getTime());
+        courseInfo.setSemister(ci.getSemester());
+        for(int i=0 ; i<adapter.instructorList.size() ; i++) {
+            if(adapter.instructorList.get(i).isChecked()) {
+                courseInfo.setInstructor_id(adapter.instructorList.get(i).getInstr_ID());
+            }
+        }
+        return courseInfo ;
     }
 
 
@@ -143,6 +180,7 @@ public class CreateCourse extends Fragment {
         daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("query",parent.getItemAtPosition(position).toString());
                 newCourseInfo.setDay(parent.getItemAtPosition(position).toString());
             }
 

@@ -1,7 +1,9 @@
 package com.example.sanket.hw6;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,19 +17,61 @@ import java.util.List;
 
 public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdapter.CourseManagerViewHolder> {
     public Context context ;
-    public List<courseInformation> courseList ;
+    public List<CourseInfo> courseList ;
+    public List<InstructorInfo> instructorList ;
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public List<CourseInfo> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseInfo> courseList) {
+        this.courseList = courseList;
+    }
+
+    public List<InstructorInfo> getInstructorList() {
+        return instructorList;
+    }
+
+    public void setInstructorList(List<InstructorInfo> instructorList) {
+        this.instructorList = instructorList;
+    }
 
     @Override
     public CourseManagerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View itemView = LayoutInflater.
+                from(parent.getContext()).
+                inflate(R.layout.courseitem, parent, false);
+
+        return new CourseManagerViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(CourseManagerViewHolder holder, int position) {
-    courseInformation course = courseList.get(position) ;
+    CourseInfo course = courseList.get(position) ;
         holder.courseTitle.setText(course.getTitle()) ;
         holder.courseInstructor.setText(course.getInstructorName());
         holder.courseTime.setText(course.getDay() + " " + course.getTime());
+        holder.courseImage.setImageBitmap(getInstructorImageFromId(course.getInstructor_id()));
+    }
+
+    private Bitmap getInstructorImageFromId(int id) {
+        if(instructorList == null) {
+            return null ;
+        }
+        for(int i=0 ; i<instructorList.size() ; i++) {
+            if(instructorList.get(i).getInstr_ID() == id) {
+                return instructorList.get(i).getImage() ;
+            }
+        }
+        return null ;
     }
 
     @Override
@@ -48,7 +92,7 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
         }
     }
 
-    public CourseManagerAdapter(Context context, List<courseInformation> courseList) {
+    public CourseManagerAdapter(Context context, List<CourseInfo> courseList) {
         this.context = context ;
         this.courseList = courseList ;
     }
