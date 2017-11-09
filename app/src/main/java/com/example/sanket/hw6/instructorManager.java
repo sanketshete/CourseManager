@@ -1,7 +1,6 @@
 package com.example.sanket.hw6;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,12 +15,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link instructorManager.OnFragmentInteractionListener} interface
+ * {@link instructorManager.onInstructorManagerFragmentInteraction} interface
  * to handle interaction events.
  */
 public class instructorManager extends Fragment {
     InstructorManagerAdapter adapter ;
-    private OnFragmentInteractionListener mListener;
+    private onInstructorManagerFragmentInteraction mListener;
     List<InstructorInfo> instructor_infoList ;
 
     public List<InstructorInfo> getInstructor_infoList() {
@@ -43,7 +42,7 @@ public class instructorManager extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_instructor_manager, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.InstructorListRv) ;
-        instructor_infoList = this.getInstructor_infoList();
+        instructor_infoList = MainActivity.databaseDataManager.getAll() ;
         if(instructor_infoList == null || instructor_infoList.size() == 0) {
             view.findViewById(R.id.noInstructorTvCm).setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
@@ -59,21 +58,16 @@ public class instructorManager extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof onInstructorManagerFragmentInteraction) {
+            mListener = (onInstructorManagerFragmentInteraction) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement onInstructorManagerFragmentInteraction");
         }
     }
 
@@ -93,8 +87,8 @@ public class instructorManager extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface onInstructorManagerFragmentInteraction {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onInstructorManagerInteraction();
     }
 }

@@ -1,7 +1,6 @@
 package com.example.sanket.hw6;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,12 +13,12 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link instructorDetail.OnFragmentInteractionListener} interface
+
  * to handle interaction events.
  */
 public class instructorDetail extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    private OnInstructorDetailInteraction mListener;
 
     public instructorDetail() {
         // Required empty public constructor
@@ -37,28 +36,22 @@ public class instructorDetail extends Fragment {
         TextView instr_email =(TextView)view.findViewById(R.id.IEmail);
         TextView instr_website =(TextView)view.findViewById(R.id.IPersonalWeb);
         ImageView iv = (ImageView)view.findViewById(R.id.instructor_image);
-
-        instr_fname.setText("");
-        instr_lname.setText("");
-        instr_email.setText("");
-        instr_website.setText("");
-        iv.setImageBitmap(null);
-
+        InstructorInfo info = mListener.onInteraction() ;
+        instr_fname.setText(info.getInstructor_fname());
+        instr_lname.setText(info.getInstructor_lname());
+        instr_email.setText(info.getInstructor_email());
+        instr_website.setText(info.getInstructor_website());
+        iv.setImageBitmap(info.getImage());
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnInstructorDetailInteraction) {
+            mListener = (OnInstructorDetailInteraction) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -81,8 +74,8 @@ public class instructorDetail extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnInstructorDetailInteraction {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        InstructorInfo onInteraction();
     }
 }

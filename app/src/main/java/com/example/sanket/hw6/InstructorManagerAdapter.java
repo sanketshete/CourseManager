@@ -1,6 +1,8 @@
 package com.example.sanket.hw6;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class InstructorManagerAdapter  extends RecyclerView.Adapter<InstructorManagerAdapter.InstructorManagerViewHolder> {
     public Context context ;
-
+    public ChangeInstructorFragment cf ;
     public List<InstructorInfo> instructorList ;
 
     public Context getContext() {
@@ -45,12 +47,47 @@ public class InstructorManagerAdapter  extends RecyclerView.Adapter<InstructorMa
     }
 
     @Override
-    public void onBindViewHolder(InstructorManagerAdapter.InstructorManagerViewHolder holder, int position) {
-        InstructorInfo instructorInfo = instructorList.get(position) ;
+    public void onBindViewHolder(InstructorManagerAdapter.InstructorManagerViewHolder holder, final int position) {
+        final InstructorInfo instructorInfo = instructorList.get(position) ;
         holder.fullName.setText(instructorInfo.getInstructor_fname()+ " "+ instructorInfo.getInstructor_lname()) ;
         holder.EmailofInstructor.setText(instructorInfo.getInstructor_email());
         holder.PersonalWebOfInstr.setText(instructorInfo.getInstructor_website());
         holder.instructorImage1.setImageBitmap(instructorInfo.getImage());
+        holder.ownView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cf.changeFragmentToInstructorDetail(instructorInfo);
+            }
+        });
+        holder.ownView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage("Are you sure you want to delete course?");
+                builder1.setCancelable(false);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            instructorList.remove(position) ;
+                                notifyDataSetChanged();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -61,6 +98,7 @@ public class InstructorManagerAdapter  extends RecyclerView.Adapter<InstructorMa
     public class InstructorManagerViewHolder extends RecyclerView.ViewHolder {
         TextView fullName,EmailofInstructor,PersonalWebOfInstr ;
         ImageView instructorImage1 ;
+        View ownView ;
 
         public InstructorManagerViewHolder(View view) {
             super(view) ;
@@ -68,11 +106,17 @@ public class InstructorManagerAdapter  extends RecyclerView.Adapter<InstructorMa
             EmailofInstructor = (TextView) view.findViewById(R.id.EmailofInstructor) ;
             PersonalWebOfInstr = (TextView) view.findViewById(R.id.PersonalWebOfInstr) ;
             instructorImage1 = (ImageView)view.findViewById(R.id.instructorImage1) ;
+            ownView = view ;
         }
     }
 
     public InstructorManagerAdapter(Context context, List<InstructorInfo> instructorList) {
         this.context = context ;
         this.instructorList = instructorList ;
+        cf = (ChangeInstructorFragment)context ;
+    }
+
+    public interface ChangeInstructorFragment {
+        void changeFragmentToInstructorDetail(InstructorInfo info) ;
     }
 }

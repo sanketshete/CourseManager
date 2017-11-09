@@ -13,10 +13,14 @@ public class MainActivity extends AppCompatActivity implements Login.OnFragmentI
 courseManager.CourseManagerFragmentInteraction,
         AddInstructure.AddInstructureFragmentInteraction,
 CourseManagerAdapter.changeFragment,
-CourseDetail.CourseDetailFragmentInteraction{
+CourseDetail.CourseDetailFragmentInteraction,
+instructorDetail.OnInstructorDetailInteraction,
+InstructorManagerAdapter.ChangeInstructorFragment,
+instructorManager.onInstructorManagerFragmentInteraction{
 
     public  static DatabaseDataManager databaseDataManager;
     public static CourseInfo courseDetailObj ;
+    public static InstructorInfo infoObj ;
     String userName ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,11 @@ CourseDetail.CourseDetailFragmentInteraction{
     }
 
     public void goToInstructorManager() {
-
+        instructorManager ccFragment = new instructorManager();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,ccFragment,"instructorManager")
+                .addToBackStack(null)
+                .commit();
     }
 
     public void logOut() {
@@ -133,8 +141,30 @@ CourseDetail.CourseDetailFragmentInteraction{
                 .commit();
     }
 
+
+
     @Override
     public CourseInfo onInteractionWithCourseDetail() {
         return courseDetailObj;
+    }
+
+    @Override
+    public InstructorInfo onInteraction() {
+        return infoObj;
+    }
+
+    @Override
+    public void changeFragmentToInstructorDetail(InstructorInfo info) {
+        instructorDetail ccFragment = new instructorDetail();
+        infoObj = info ;
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,ccFragment,"instructordetail")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onInstructorManagerInteraction() {
+
     }
 }

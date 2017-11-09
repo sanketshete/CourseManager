@@ -1,6 +1,8 @@
 package com.example.sanket.hw6;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,7 +57,7 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
     }
 
     @Override
-    public void onBindViewHolder(CourseManagerViewHolder holder, int position) {
+    public void onBindViewHolder(CourseManagerViewHolder holder, final int position) {
     final CourseInfo course = courseList.get(position) ;
         holder.courseTitle.setText(course.getTitle()) ;
         holder.courseInstructor.setText(course.getInstructorName());
@@ -66,6 +68,35 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
             @Override
             public void onClick(View v) {
                 cf.goToCourseDetailFragment(course);
+            }
+        });
+        holder.ownView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage("Are you sure you want to delete course?");
+                builder1.setCancelable(false);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            courseList.remove(position) ;
+                                notifyDataSetChanged();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+                return false;
             }
         });
     }
