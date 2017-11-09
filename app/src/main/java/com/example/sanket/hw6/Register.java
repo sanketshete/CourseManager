@@ -54,15 +54,18 @@ public class Register extends Fragment {
                             ||image==null) {
                         Toast.makeText(getActivity(), "All fields are mandatory", Toast.LENGTH_LONG).show();
                     } else {
-                        registerinfo.setUsername(uname.getText().toString());
-                        registerinfo.setPassowrd(pass.getText().toString());
-                        registerinfo.setFirst_name(fname.getText().toString());
-                        registerinfo.setLast_name(lname.getText().toString());
-
-                        if(MainActivity.databaseDataManager.saveUser(registerinfo)!=-1){
-                            Toast.makeText(getActivity(),"Register Successsfully",Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(getActivity(),"Not Register Successsfully",Toast.LENGTH_LONG).show();
+                        if(pass.getText().toString().length()< 8){
+                            Toast.makeText(getActivity(), "Password should be of minimum 8 chracter", Toast.LENGTH_LONG).show();
+                        }else {
+                            registerinfo.setUsername(uname.getText().toString());
+                            registerinfo.setPassowrd(pass.getText().toString());
+                            registerinfo.setFirst_name(fname.getText().toString());
+                            registerinfo.setLast_name(lname.getText().toString());
+                            if (MainActivity.databaseDataManager.saveUser(registerinfo) != -1) {
+                                Toast.makeText(getActivity(), "Register Successsfully", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Not Register Successsfully", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }

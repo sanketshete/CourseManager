@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 
 public class RegisterTable {
-    static final String TABLENAME="registerTable";
+    static final String TABLENAME="registerTable1";
     static final String FIRST_NAME ="fname";
     static final String LAST_NAME ="lname";
     static final String USER_NAME ="uname";
@@ -24,7 +24,6 @@ public class RegisterTable {
         sb.append(LAST_NAME+" text not null);");
         sb.append(USER_Image+" blob not null, ");
         try{
-
             db.execSQL(sb.toString());
         }catch (SQLException ex){
             ex.printStackTrace();

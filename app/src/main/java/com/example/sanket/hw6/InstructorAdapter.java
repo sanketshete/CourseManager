@@ -74,7 +74,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.In
             isSelected.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    lastCheckedPosition=getAdapterPosition() ;
+                    lastCheckedPosition= getAdapterPosition() ;
                     notifyDataSetChanged();
                 }
             });
