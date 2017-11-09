@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 
 public class RegisterTable {
-    static final String TABLENAME="registerTable1";
+    static final String TABLENAME="registerTable";
     static final String FIRST_NAME ="fname";
     static final String LAST_NAME ="lname";
     static final String USER_NAME ="uname";

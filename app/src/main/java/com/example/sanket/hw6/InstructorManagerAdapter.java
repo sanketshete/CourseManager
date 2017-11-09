@@ -69,7 +69,8 @@ public class InstructorManagerAdapter  extends RecyclerView.Adapter<InstructorMa
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                            instructorList.remove(position) ;
+                                MainActivity.databaseDataManager.deleteInstructor(instructorInfo.instr_ID) ;
+                                instructorList.remove(position) ;
                                 notifyDataSetChanged();
                             }
                         });

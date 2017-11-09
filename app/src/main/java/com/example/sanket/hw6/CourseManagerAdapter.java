@@ -81,8 +81,10 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                            MainActivity.databaseDataManager.deleteCourse(course.getCourse_Id()) ;
                             courseList.remove(position) ;
                                 notifyDataSetChanged();
+
                             }
                         });
 

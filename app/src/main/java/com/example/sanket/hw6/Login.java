@@ -70,7 +70,7 @@ public class Login extends Fragment {
         final EditText uname = (EditText)view.findViewById(R.id.username);
         final EditText password = (EditText)view.findViewById(R.id.password);
 
-        password.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "6")});
+       // password.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "6")});
 
         view.findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
             @Override

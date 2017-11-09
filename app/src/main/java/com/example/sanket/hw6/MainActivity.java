@@ -16,7 +16,8 @@ CourseManagerAdapter.changeFragment,
 CourseDetail.CourseDetailFragmentInteraction,
 instructorDetail.OnInstructorDetailInteraction,
 InstructorManagerAdapter.ChangeInstructorFragment,
-instructorManager.onInstructorManagerFragmentInteraction{
+instructorManager.onInstructorManagerFragmentInteraction,
+Register.onInteractionWithRegister{
 
     public  static DatabaseDataManager databaseDataManager;
     public static CourseInfo courseDetailObj ;
@@ -166,5 +167,10 @@ instructorManager.onInstructorManagerFragmentInteraction{
     @Override
     public void onInstructorManagerInteraction() {
 
+    }
+
+    @Override
+    public void afterRegister() {
+        gotoCourseManager(null) ;
     }
 }

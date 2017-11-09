@@ -1,9 +1,7 @@
 package com.example.sanket.hw6;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -66,6 +64,7 @@ public class Register extends Fragment {
                             } else {
                                 Toast.makeText(getActivity(), "Not Register Successsfully", Toast.LENGTH_LONG).show();
                             }
+
                         }
                     }
                 }
@@ -104,5 +103,8 @@ public class Register extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+public interface onInteractionWithRegister{
+        public void afterRegister() ;
+    }
 
 }
