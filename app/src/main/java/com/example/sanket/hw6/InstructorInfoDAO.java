@@ -62,8 +62,12 @@ public class InstructorInfoDAO {
         }
         return instructorInfo1;
     }
-    
-    
+
+    public boolean deleteInstructor(int id)
+    {
+        return db.delete(InstructorTable.TABLENAME,InstructorTable.COLUMN_ID +"=?",new String[]{String.valueOf(id)})>0;
+    }
+
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
